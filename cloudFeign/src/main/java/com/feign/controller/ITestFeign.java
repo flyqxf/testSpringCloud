@@ -1,17 +1,25 @@
 package com.feign.controller;
 
-import org.springframework.cloud.openfeign.FeignClient;
+import com.feign.service.ITestFeignService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * Created by flyqx on 2019/3/11.
  */
-@FeignClient(value="eurekaclient")
-public interface ITestFeign {
+@RestController
+public class ITestFeign {
 
-    @RequestMapping(value="add",method = RequestMethod.GET)
-    public String add(@RequestParam(value = "a") int a,@RequestParam(value = "b") int b);
+    @Autowired
+    private ITestFeignService testFeignService;
+    @RequestMapping(value = "/add", method = RequestMethod.GET)
+    public String add() {
+
+        String res = testFeignService.add(10,15);
+        return res;
+    }
+
 
 }
